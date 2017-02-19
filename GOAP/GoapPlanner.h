@@ -35,7 +35,7 @@ public:
 	std::queue<GoapAction*> Plan(BaseObject* object, std::set<GoapAction*> possibleActions, std::unordered_map<std::string, bool> worldState, std::unordered_map<std::string, bool> goal);
 
 private:
-	bool BuildGraph(Node* parent, std::list<Node*> leaves, std::set<GoapAction*> possibleActions, std::unordered_map<std::string, bool> goal);
+	bool BuildGraph(Node* parent, std::list<Node*>& leaves, std::set<GoapAction*> possibleActions, std::unordered_map<std::string, bool> goal);
 	std::set<GoapAction*> ActionSubset(std::set<GoapAction*> actions, GoapAction* removeMe);
 	bool InState(std::unordered_map<std::string, bool> test, std::unordered_map<std::string, bool> state);
 	std::unordered_map<std::string, bool> PopulateState(std::unordered_map<std::string, bool> currentState, std::unordered_map<std::string, bool> stateChange);

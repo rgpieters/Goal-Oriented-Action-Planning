@@ -1,6 +1,8 @@
 #include "BaseObject.h"
 #include "GoapAgent.h"
 
+#include <iostream>
+
 BaseObject::BaseObject()
 {
 	// NOTE: This will need to be done the child class after actions have been initialized
@@ -47,6 +49,7 @@ void BaseObject::PlanFound(std::unordered_map<std::string, bool> goal, std::queu
 void BaseObject::ActionsFinished()
 {
 	// message actions finished
+	std::cout << "Finished\n";
 }
 
 void BaseObject::PlanAborted(GoapAction* aborter)

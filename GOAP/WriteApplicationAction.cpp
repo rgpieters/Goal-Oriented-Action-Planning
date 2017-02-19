@@ -1,10 +1,12 @@
 #include "WriteApplicationAction.h"
-#include <time.h>
 
 WriteApplicationAction::WriteApplicationAction()
 {
-	AddPrecondition("hasKnowledge", true);
+	AddPrecondition("applicationWritten", false);
 	AddEffect("applicationWritten", true);
+	m_Cost = 5.0f;
+
+	Reset();
 }
 
 WriteApplicationAction::WriteApplicationAction(const WriteApplicationAction&)
@@ -19,9 +21,11 @@ WriteApplicationAction::~WriteApplicationAction()
 
 void WriteApplicationAction::Reset()
 {
+	doReset();
+
 	m_ApplicationWritten = false;
 	m_StartTime = 0.0f;
-	m_WorkDuration = 50.0f;
+	m_WorkDuration = 50000.0f;
 }
 
 bool WriteApplicationAction::IsDone()
@@ -42,12 +46,12 @@ bool WriteApplicationAction::CheckPrecondition(BaseObject* object)
 
 bool WriteApplicationAction::PerformAction(BaseObject* object)
 {
-	time_t timer;
-
 	if (m_StartTime == 0.0f)
 	{
 		m_StartTime = 1.0f;
 	}
+
+	m_StartTime++;
 
 	if(m_StartTime > m_WorkDuration)
 	{

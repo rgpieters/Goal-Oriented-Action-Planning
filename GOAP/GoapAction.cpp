@@ -3,7 +3,6 @@
 GoapAction::GoapAction()
 {
 	m_Target = nullptr;
-	//m_Preconditions = new std::unordered_map<std::string, bool>();
 }
 
 GoapAction::GoapAction(const GoapAction&)

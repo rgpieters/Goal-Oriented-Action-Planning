@@ -22,7 +22,7 @@ std::queue<GoapAction*> GoapPlanner::Plan(BaseObject* object, std::set<GoapActio
 	std::set<GoapAction*>::iterator iter;
 	for (iter = possibleActions.begin(); iter != possibleActions.end(); iter++)
 	{
-		((GoapAction*)*iter)->doReset();
+		((GoapAction*)*iter)->Reset();
 	}
 
 	std::set< GoapAction*> usableActions;
@@ -85,7 +85,7 @@ std::queue<GoapAction*> GoapPlanner::Plan(BaseObject* object, std::set<GoapActio
 	return endResult;
 }
 
-bool GoapPlanner::BuildGraph(Node* parent, std::list<Node*> leaves, std::set<GoapAction*> possibleActions, std::unordered_map<std::string, bool> goal)
+bool GoapPlanner::BuildGraph(Node* parent, std::list<Node*>& leaves, std::set<GoapAction*> possibleActions, std::unordered_map<std::string, bool> goal)
 {
 	bool foundOne = false;
 
@@ -168,7 +168,7 @@ std::unordered_map<std::string, bool> GoapPlanner::PopulateState(std::unordered_
 	std::unordered_map<std::string, bool>::iterator outerIter;
 	for (outerIter = currentState.begin(); outerIter != currentState.end(); outerIter++)
 	{
-		state.insert(state.end(), outerIter);
+		state.insert(state.end(), *outerIter);
 	}
 
 	std::unordered_map<std::string, bool>::iterator innerIter;
@@ -178,7 +178,7 @@ std::unordered_map<std::string, bool> GoapPlanner::PopulateState(std::unordered_
 
 		for (innerIter = state.begin(); innerIter != state.end(); innerIter++)
 		{
-			if (*innerIter == *outerIter)
+			if (innerIter->first == innerIter->first)
 			{
 				exists = true;
 				break;
@@ -187,12 +187,12 @@ std::unordered_map<std::string, bool> GoapPlanner::PopulateState(std::unordered_
 
 		if (exists)
 		{
-			state.erase(outerIter);
-			state.insert(state.end(), outerIter);
+			state.erase(outerIter->first);
+			state.insert(state.end(), *outerIter);
 		}
 		else
 		{
-			state.insert(state.end(), outerIter);
+			state.insert(state.end(), *outerIter);
 		}
 	}
 

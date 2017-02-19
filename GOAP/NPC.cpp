@@ -24,7 +24,6 @@ NPC::~NPC()
 void NPC::Update()
 {
 	BaseObject::Update();
-	int x = 10;
 }
 
 std::unordered_map<std::string, bool> NPC::CreateGoalState()

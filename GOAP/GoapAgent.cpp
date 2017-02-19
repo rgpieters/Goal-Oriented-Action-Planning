@@ -142,14 +142,13 @@ int GoapAgent::PerformActionStateUpdate(BaseObject* object)
 				m_StateStack.push(m_MoveState);
 			}
 		}
-		else
-		{
-			m_StateStack.pop();
-			m_StateStack.push(m_IdleState);
-			m_DataProvider->ActionsFinished();
-		}
 	}
-
+	else
+	{
+		m_StateStack.pop();
+		m_StateStack.push(m_IdleState);
+		m_DataProvider->ActionsFinished();
+	}
 	return 1;
 }
 

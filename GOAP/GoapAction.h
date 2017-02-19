@@ -8,7 +8,7 @@ class BaseObject;
 
 class GoapAction
 {
-private:
+protected:
 	std::unordered_map<std::string, bool> m_Preconditions;
 	std::unordered_map<std::string, bool> m_Effects;
 	bool m_InRange = false;
