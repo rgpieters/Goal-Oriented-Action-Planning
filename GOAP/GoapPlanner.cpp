@@ -145,7 +145,7 @@ bool GoapPlanner::InState(std::unordered_map<std::string, bool> test, std::unord
 		std::unordered_map<std::string, bool>::iterator innerIter;
 		for (innerIter = state.begin(); innerIter != state.end(); innerIter++)
 		{
-			if (innerIter == outerIter)
+			if (*innerIter == *outerIter)
 			{
 				match = true;
 				break;
@@ -178,7 +178,7 @@ std::unordered_map<std::string, bool> GoapPlanner::PopulateState(std::unordered_
 
 		for (innerIter = state.begin(); innerIter != state.end(); innerIter++)
 		{
-			if (innerIter == outerIter)
+			if (*innerIter == *outerIter)
 			{
 				exists = true;
 				break;

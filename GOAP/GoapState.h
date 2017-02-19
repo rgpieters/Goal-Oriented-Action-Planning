@@ -4,18 +4,21 @@
 class BaseObject;
 class GoapAgent;
 
+typedef int(GoapAgent::*FUNC_PTR)(BaseObject*);
+
 class GoapState
 {
-private:
-	void(GoapAgent::*UpdateFunc)(BaseObject*);
-	GoapAgent* m_Agent;
 public:
 	GoapState();
+	GoapState(FUNC_PTR Func, GoapAgent* agent);
 	GoapState(const GoapState&);
 	~GoapState();
 
-	void SetUp(GoapAgent* agent, void(GoapAgent::*Func)(BaseObject*));
 	void Update(BaseObject* object);
+
+private:
+	FUNC_PTR UpdateFunc;
+	GoapAgent* m_Agent;
 };
 
 #endif

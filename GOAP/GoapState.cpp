@@ -1,8 +1,15 @@
 #include "GoapState.h"
+#include "GoapAgent.h"
 
 GoapState::GoapState()
 {
 
+}
+
+GoapState::GoapState(FUNC_PTR Func, GoapAgent* agent)
+{
+	UpdateFunc = Func;
+	m_Agent = agent;
 }
 
 GoapState::GoapState(const GoapState&)
@@ -15,13 +22,7 @@ GoapState::~GoapState()
 
 }
 
-void GoapState::SetUp(GoapAgent* agent, void(GoapAgent::*Func)(BaseObject*))
-{
-	m_Agent = agent;
-	UpdateFunc = Func;
-}
-
 void GoapState::Update(BaseObject* object)
 {
-	((m_Agent)->*(UpdateFunc))(object);
+	(m_Agent->*UpdateFunc)(object);
 }

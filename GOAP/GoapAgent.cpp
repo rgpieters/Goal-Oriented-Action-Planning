@@ -1,20 +1,21 @@
 #include "GoapAgent.h"
-#include "GoapState.h"
 #include "IGoap.h"
 #include "GoapAction.h"
 #include "BaseObject.h"
 #include "GoapPlanner.h"
 
+GoapAgent::GoapAgent()
+{
+
+}
+
 GoapAgent::GoapAgent(BaseObject* object)
 {
 	m_GoapPlanner = new GoapPlanner();
 	FindDataProvider(object);
-	m_IdleState = new GoapState();
-	m_IdleState->SetUp(this, &GoapAgent::IdleStateUpdate);
-	m_MoveState = new GoapState();
-	m_MoveState->SetUp(this, &GoapAgent::MoveStateUpdate);
-	m_PerformActionState = new GoapState();
-	m_PerformActionState->SetUp(this, &GoapAgent::PerformActionStateUpdate);
+	m_IdleState = new GoapState(&GoapAgent::IdleStateUpdate, this);
+	m_MoveState = new GoapState(&GoapAgent::MoveStateUpdate, this);
+	m_PerformActionState = new GoapState(&GoapAgent::PerformActionStateUpdate, this);
 	m_StateStack.push(m_IdleState);
 	LoadActions(object);
 }
@@ -61,7 +62,7 @@ void GoapAgent::RemoveAction(GoapAction* action)
 	m_PossibleActions.erase(action);
 }
 
-void GoapAgent::IdleStateUpdate(BaseObject* object)
+int GoapAgent::IdleStateUpdate(BaseObject* object)
 {
 	std::unordered_map<std::string, bool> worldState = m_DataProvider->GetWorldState();
 	std::unordered_map<std::string, bool> goal = m_DataProvider->CreateGoalState();
@@ -74,40 +75,45 @@ void GoapAgent::IdleStateUpdate(BaseObject* object)
 
 		m_StateStack.pop();
 		m_StateStack.push(m_PerformActionState);
+
+		return 1;
 	}
 	else
 	{
 		m_StateStack.pop();
 		m_StateStack.push(m_IdleState);
+
+		return 1;
 	}
 }
 
-void GoapAgent::MoveStateUpdate(BaseObject* object)
+int GoapAgent::MoveStateUpdate(BaseObject* object)
 {
 	GoapAction* action = m_CurrentActions.front();
 	if (action->RequiresInRange() && action->Target() == nullptr)
 	{
-		// Error message about needing target but not being assigned one
 		m_StateStack.pop();
 		m_StateStack.pop();
 		m_StateStack.push(m_IdleState);
-		return;
+		return 1;
 	}
 
 	if (m_DataProvider->MoveAgent(action))
 	{
 		m_StateStack.pop();
 	}
+
+	return 1;
 }
 
-void GoapAgent::PerformActionStateUpdate(BaseObject* object)
+int GoapAgent::PerformActionStateUpdate(BaseObject* object)
 {
 	if (!HasActionPlan())
 	{
 		m_StateStack.pop();
 		m_StateStack.push(m_IdleState);
 		m_DataProvider->ActionsFinished();
-		return;
+		return 1;
 	}
 
 	GoapAction* action = m_CurrentActions.front();
@@ -143,6 +149,8 @@ void GoapAgent::PerformActionStateUpdate(BaseObject* object)
 			m_DataProvider->ActionsFinished();
 		}
 	}
+
+	return 1;
 }
 
 void GoapAgent::Update(BaseObject* object)

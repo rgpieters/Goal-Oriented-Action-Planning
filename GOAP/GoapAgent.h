@@ -1,13 +1,14 @@
 #ifndef _GOAP_AGENT_H_
 #define _GOAP_AGENT_H_
 
+#include "GoapState.h"
+
 #include <stack>
 #include <queue>
 #include <set>
 #include <unordered_map>
 #include <string>
 
-class GoapState;
 class IGoap;
 class GoapAction;
 class GoapPlanner;
@@ -15,6 +16,16 @@ class BaseObject;
 
 class GoapAgent
 {
+public:
+	GoapAgent();
+	GoapAgent(BaseObject* object);
+	GoapAgent(const GoapAgent&);
+	~GoapAgent();
+
+	void Update(BaseObject* object);
+	void AddAction(GoapAction* action);
+	void RemoveAction(GoapAction* action);
+
 private:
 	std::stack<GoapState*> m_StateStack;
 
@@ -29,22 +40,13 @@ private:
 
 	GoapPlanner* m_GoapPlanner;
 
-	void IdleStateUpdate(BaseObject* object);
-	void MoveStateUpdate(BaseObject* object);
-	void PerformActionStateUpdate(BaseObject* object);
+	int IdleStateUpdate(BaseObject* object);
+	int MoveStateUpdate(BaseObject* object);
+	int PerformActionStateUpdate(BaseObject* object);
 
 	bool HasActionPlan();
 	void FindDataProvider(BaseObject* object);
 	void LoadActions(BaseObject* object);
-
-public:
-	GoapAgent(BaseObject* object);
-	GoapAgent(const GoapAgent&);
-	~GoapAgent();
-
-	void Update(BaseObject* object);
-	void AddAction(GoapAction* action);
-	void RemoveAction(GoapAction* action);
 };
 
 #endif

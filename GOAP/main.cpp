@@ -1,6 +1,8 @@
 #include <cstdlib>
 #include "NPC.h"
 
+#include "GoapAgent.h"
+
 int main()
 {
 	NPC* npc = new NPC();

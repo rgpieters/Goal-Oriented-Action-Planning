@@ -16,10 +16,8 @@ public:
 	BaseObject(const BaseObject&);
 	~BaseObject();
 
-	GoapAgent* m_GoapAgent;
-
-	std::vector<GoapAction*> GetActions() { return m_Actions; }
 	virtual std::unordered_map<std::string, bool> CreateGoalState() = 0;
+
 	void Update();
 	std::unordered_map<std::string, bool> GetWorldState();
 	void PlanFailed(std::unordered_map<std::string, bool> failedGoal);
@@ -27,8 +25,14 @@ public:
 	void ActionsFinished();
 	void PlanAborted(GoapAction* aborter);
 	bool MoveAgent(GoapAction* nextAction);
+
+	std::vector<GoapAction*> GetActions() { return m_Actions; }
+	void AddAction(GoapAction* action) { m_Actions.insert(m_Actions.end(), action); }
 private:
 	std::vector<GoapAction*> m_Actions;
+
+protected:
+	GoapAgent* m_GoapAgent;
 };
 
 #endif

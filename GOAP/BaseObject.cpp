@@ -3,7 +3,8 @@
 
 BaseObject::BaseObject()
 {
-	m_GoapAgent = new GoapAgent(this);
+	// NOTE: This will need to be done the child class after actions have been initialized
+	//m_GoapAgent = new GoapAgent(this);
 }
 
 BaseObject::BaseObject(const BaseObject&)
@@ -23,7 +24,7 @@ BaseObject::~BaseObject()
 std::unordered_map<std::string, bool> BaseObject::GetWorldState()
 {
 	std::unordered_map<std::string, bool> worldData;
-	worldData.insert(worldData.begin(), std::pair<std::string, bool>("world data here", false));
+	worldData.insert(worldData.begin(), std::pair<std::string, bool>("applicationWritten", false));
 
 	return worldData;
 }

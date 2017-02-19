@@ -39,6 +39,9 @@
     <ClCompile Include="NPC.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
+    <ClCompile Include="WriteApplicationAction.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GoapAction.h">
@@ -60,6 +63,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="NPC.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="WriteApplicationAction.h">
       <Filter>Entities</Filter>
     </ClInclude>
   </ItemGroup>

@@ -153,6 +153,7 @@
     <ClCompile Include="GoapState.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NPC.cpp" />
+    <ClCompile Include="WriteApplicationAction.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseObject.h" />
@@ -162,6 +163,7 @@
     <ClInclude Include="IGoap.h" />
     <ClInclude Include="GoapState.h" />
     <ClInclude Include="NPC.h" />
+    <ClInclude Include="WriteApplicationAction.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

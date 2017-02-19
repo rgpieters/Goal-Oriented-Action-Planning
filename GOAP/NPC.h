@@ -3,6 +3,8 @@
 
 #include "BaseObject.h"
 
+class WriteApplicationAction;
+
 class NPC : BaseObject
 {
 public:
@@ -14,6 +16,7 @@ public:
 
 private:
 	std::unordered_map<std::string, bool> CreateGoalState();
+	WriteApplicationAction* m_WriteAction;
 };
 
 #endif
